@@ -40,3 +40,7 @@ frontend/build/
 
 # Java
 *.class
+
+# JVM crash logs
+hs_err_pid*
+replay_pid*
