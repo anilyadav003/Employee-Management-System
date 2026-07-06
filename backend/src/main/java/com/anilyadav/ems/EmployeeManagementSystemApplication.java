@@ -1,4 +1,4 @@
-package com.anilyadav.employee_management_system;
+package com.anilyadav.ems;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

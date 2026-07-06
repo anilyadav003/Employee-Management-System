@@ -1,4 +1,4 @@
-package com.anilyadav.employee_management_system;
+package com.anilyadav.ems;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
