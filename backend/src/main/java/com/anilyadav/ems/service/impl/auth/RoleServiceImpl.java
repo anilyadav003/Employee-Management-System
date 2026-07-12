@@ -1,5 +1,5 @@
 package com.anilyadav.ems.service.impl.auth;
-
+import com.anilyadav.ems.exception.ResourceNotFoundException;
 import com.anilyadav.ems.dto.request.RoleRequest;
 import com.anilyadav.ems.dto.response.RoleResponse;
 import com.anilyadav.ems.entity.auth.Role;
@@ -41,9 +41,17 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleResponse getRoleById(Long id) {
-        return null;
-    }
 
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Role not found with id : " + id));
+
+        return RoleResponse.builder()
+                .id(role.getId())
+                .name(role.getName())
+                .description(role.getDescription())
+                .build();
+    }
     @Override
     public RoleResponse getRoleByName(RoleType roleType) {
         return null;
@@ -51,16 +59,50 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleResponse> getAllRoles() {
-        return null;
-    }
 
+        List<Role> roles = roleRepository.findAll();
+
+        return roles.stream()
+                .map(role -> RoleResponse.builder()
+                        .id(role.getId())
+                        .name(role.getName())
+                        .description(role.getDescription())
+                        .build())
+                .toList();
+    }
     @Override
     public RoleResponse updateRole(Long id, RoleRequest roleRequest) {
-        return null;
-    }
 
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Role not found with id : " + id));
+
+        if (!role.getName().equals(roleRequest.getName())
+                && roleRepository.existsByName(roleRequest.getName())) {
+
+            throw new DuplicateResourceException(
+                    "Role already exists with name : " + roleRequest.getName());
+        }
+
+        role.setName(roleRequest.getName());
+        role.setDescription(roleRequest.getDescription());
+
+        Role updatedRole = roleRepository.save(role);
+
+        return RoleResponse.builder()
+                .id(updatedRole.getId())
+                .name(updatedRole.getName())
+                .description(updatedRole.getDescription())
+                .build();
+    }
     @Override
+
     public void deleteRole(Long id) {
 
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Role not found with id : " + id));
+
+        roleRepository.delete(role);
     }
 }
