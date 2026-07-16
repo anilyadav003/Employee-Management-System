@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.anilyadav.ems.enums.RoleType;
 
 import java.util.List;
 
@@ -54,6 +55,14 @@ public class RoleController {
         roleService.deleteRole(id);
 
         return ResponseEntity.ok("Role deleted successfully.");
+    }
+    @GetMapping("/name/{roleType}")
+    public ResponseEntity<RoleResponse> getRoleByName(
+            @PathVariable RoleType roleType) {
+
+        RoleResponse roleResponse = roleService.getRoleByName(roleType);
+
+        return ResponseEntity.ok(roleResponse);
     }
 
 }
