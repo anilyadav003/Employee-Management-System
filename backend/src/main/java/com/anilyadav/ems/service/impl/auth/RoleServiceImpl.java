@@ -54,9 +54,18 @@ public class RoleServiceImpl implements RoleService {
     }
     @Override
     public RoleResponse getRoleByName(RoleType roleType) {
-        return null;
-    }
 
+        Role role = roleRepository.findByName(roleType)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Role not found with name : " + roleType));
+
+        return RoleResponse.builder()
+                .id(role.getId())
+                .name(role.getName())
+                .description(role.getDescription())
+                .build();
+    }
     @Override
     public List<RoleResponse> getAllRoles() {
 
