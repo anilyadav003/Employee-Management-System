@@ -10,6 +10,7 @@ import com.anilyadav.ems.repository.RoleRepository;
 import com.anilyadav.ems.repository.UserRepository;
 import com.anilyadav.ems.service.auth.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserResponse createUser(UserRequest userRequest) {
@@ -42,7 +44,10 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(userRequest.getUsername());
         user.setEmail(userRequest.getEmail());
-        user.setPassword(userRequest.getPassword());
+
+        // Encrypt password before saving
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+
         user.setEnabled(true);
         user.setRole(role);
 
@@ -118,7 +123,10 @@ public class UserServiceImpl implements UserService {
 
         user.setUsername(userRequest.getUsername());
         user.setEmail(userRequest.getEmail());
-        user.setPassword(userRequest.getPassword());
+
+        // Encrypt password before updating
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+
         user.setRole(role);
 
         User updatedUser = userRepository.save(user);
