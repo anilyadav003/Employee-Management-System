@@ -2,18 +2,20 @@ package com.anilyadav.ems.controller;
 
 import com.anilyadav.ems.dto.request.RoleRequest;
 import com.anilyadav.ems.dto.response.RoleResponse;
+import com.anilyadav.ems.enums.RoleType;
 import com.anilyadav.ems.service.auth.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import com.anilyadav.ems.enums.RoleType;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/roles")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class RoleController {
 
     private final RoleService roleService;
@@ -26,6 +28,7 @@ public class RoleController {
 
         return new ResponseEntity<>(roleResponse, HttpStatus.CREATED);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<RoleResponse> getRoleById(@PathVariable Long id) {
 
@@ -33,6 +36,7 @@ public class RoleController {
 
         return ResponseEntity.ok(roleResponse);
     }
+
     @GetMapping
     public ResponseEntity<List<RoleResponse>> getAllRoles() {
 
@@ -40,6 +44,7 @@ public class RoleController {
 
         return ResponseEntity.ok(roleResponses);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<RoleResponse> updateRole(
             @PathVariable Long id,
@@ -49,6 +54,7 @@ public class RoleController {
 
         return ResponseEntity.ok(roleResponse);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteRole(@PathVariable Long id) {
 
@@ -56,6 +62,7 @@ public class RoleController {
 
         return ResponseEntity.ok("Role deleted successfully.");
     }
+
     @GetMapping("/name/{roleType}")
     public ResponseEntity<RoleResponse> getRoleByName(
             @PathVariable RoleType roleType) {
@@ -64,5 +71,4 @@ public class RoleController {
 
         return ResponseEntity.ok(roleResponse);
     }
-
 }
