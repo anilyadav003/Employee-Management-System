@@ -5,9 +5,10 @@ import com.anilyadav.ems.dto.response.DepartmentResponse;
 import com.anilyadav.ems.entity.department.Department;
 import com.anilyadav.ems.exception.ResourceAlreadyExistsException;
 import com.anilyadav.ems.repository.DepartmentRepository;
-import com.anilyadav.ems.service.department.DepartmentService;
+import com.anilyadav.ems.service.auth.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.anilyadav.ems.exception.ResourceNotFoundException;
 
 import java.util.List;
 
@@ -43,27 +44,71 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentResponse getDepartmentById(Long id) {
-        return null;
+
+        Department department = departmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Department not found with id : " + id));
+
+        return mapToDepartmentResponse(department);
     }
 
     @Override
     public List<DepartmentResponse> getAllDepartments() {
-        return List.of();
+
+        return departmentRepository.findAll()
+                .stream()
+                .map(this::mapToDepartmentResponse)
+                .toList();
     }
 
     @Override
     public DepartmentResponse updateDepartment(Long id, DepartmentRequest request) {
-        return null;
+
+        Department department = departmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Department not found with id : " + id));
+
+        if (!department.getName().equals(request.getName())
+                && departmentRepository.existsByName(request.getName())) {
+
+            throw new ResourceAlreadyExistsException(
+                    "Department already exists with name : " + request.getName());
+        }
+
+        if (!department.getCode().equals(request.getCode())
+                && departmentRepository.existsByCode(request.getCode())) {
+
+            throw new ResourceAlreadyExistsException(
+                    "Department already exists with code : " + request.getCode());
+        }
+
+        department.setName(request.getName());
+        department.setCode(request.getCode());
+        department.setDescription(request.getDescription());
+
+        Department updatedDepartment = departmentRepository.save(department);
+
+        return mapToDepartmentResponse(updatedDepartment);
     }
 
     @Override
     public void deleteDepartment(Long id) {
 
+        Department department = departmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Department not found with id : " + id));
+
+        departmentRepository.delete(department);
     }
 
     @Override
     public DepartmentResponse getDepartmentByCode(String code) {
-        return null;
+
+        Department department = departmentRepository.findByCode(code)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Department not found with code : " + code));
+
+        return mapToDepartmentResponse(department);
     }
 
     private DepartmentResponse mapToDepartmentResponse(Department department) {

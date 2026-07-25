@@ -1,4 +1,4 @@
-package com.anilyadav.ems.service.department;
+package com.anilyadav.ems.service.auth;
 
 import com.anilyadav.ems.dto.request.DepartmentRequest;
 import com.anilyadav.ems.dto.response.DepartmentResponse;

@@ -1,6 +1,7 @@
 package com.anilyadav.ems.entity.auth;
 
 import com.anilyadav.ems.entity.audit.BaseEntity;
+import com.anilyadav.ems.entity.employee.Employee;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,4 +29,7 @@ public class User extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Employee employee;
 }
