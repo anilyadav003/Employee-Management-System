@@ -1,4 +1,4 @@
-package com.anilyadav.ems.service.impl.auth;
+package com.anilyadav.ems.service;
 import com.anilyadav.ems.exception.ResourceNotFoundException;
 import com.anilyadav.ems.dto.request.RoleRequest;
 import com.anilyadav.ems.dto.response.RoleResponse;

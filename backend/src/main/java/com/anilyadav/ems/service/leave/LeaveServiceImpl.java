@@ -1,4 +1,4 @@
-package com.anilyadav.ems.service.impl.leave;
+package com.anilyadav.ems.service.leave;
 
 import com.anilyadav.ems.dto.request.LeaveRequest;
 import com.anilyadav.ems.dto.response.LeaveResponse;

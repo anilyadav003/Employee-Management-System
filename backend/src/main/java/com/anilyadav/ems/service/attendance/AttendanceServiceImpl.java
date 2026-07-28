@@ -1,4 +1,4 @@
-package com.anilyadav.ems.service.impl.attendance;
+package com.anilyadav.ems.service.attendance;
 
 import com.anilyadav.ems.dto.request.AttendanceRequest;
 import com.anilyadav.ems.dto.response.AttendanceResponse;

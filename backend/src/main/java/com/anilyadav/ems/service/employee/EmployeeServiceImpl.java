@@ -1,4 +1,4 @@
-package com.anilyadav.ems.service.impl.employee;
+package com.anilyadav.ems.service.employee;
 
 import com.anilyadav.ems.dto.request.EmployeeRequest;
 import com.anilyadav.ems.dto.response.EmployeeResponse;
