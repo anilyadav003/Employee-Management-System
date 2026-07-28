@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;
@@ -62,6 +63,30 @@ class AuthServiceImplTest {
         verify(authenticationManager).authenticate(any());
         verify(userRepository).findByUsername("anil");
 
+        verify(jwtService, never()).generateToken(any());
+    }
+    @Test
+    void login_ShouldThrowBadCredentialsException_WhenPasswordIsInvalid() {
+
+        // Arrange
+        LoginRequest request = new LoginRequest();
+        request.setUsername("anil");
+        request.setPassword("wrongPassword");
+
+        when(authenticationManager.authenticate(any()))
+                .thenThrow(new BadCredentialsException("Bad credentials"));
+
+        // Act & Assert
+        BadCredentialsException exception = assertThrows(
+                BadCredentialsException.class,
+                () -> authService.login(request)
+        );
+
+        assertEquals("Bad credentials", exception.getMessage());
+
+        verify(authenticationManager).authenticate(any());
+
+        verify(userRepository, never()).findByUsername(anyString());
         verify(jwtService, never()).generateToken(any());
     }
 }
