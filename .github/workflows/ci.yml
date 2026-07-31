@@ -1,0 +1,36 @@
+name: Employee Management System CI
+
+on:
+  push:
+    branches:
+      - feature
+      - develop
+      - main
+
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Grant execute permission for Maven Wrapper
+        working-directory: backend
+        run: chmod +x mvnw
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build and Test with Maven
+        working-directory: backend
+        run: ./mvnw clean verify
