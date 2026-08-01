@@ -28,6 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.security.test.context.support.WithMockUser;
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
@@ -66,7 +67,7 @@ class AttendanceControllerTest {
                 .workingHours(9.0)
                 .build();
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should mark attendance successfully")
     void markAttendance_ShouldReturn201() throws Exception {
@@ -83,6 +84,7 @@ class AttendanceControllerTest {
                 .andExpect(jsonPath("$.employeeName").value("John Doe"));
     }
 
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return attendance by id")
     void getAttendanceById_ShouldReturn200() throws Exception {
@@ -95,6 +97,7 @@ class AttendanceControllerTest {
                 .andExpect(jsonPath("$.id").value(1));
     }
 
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return all attendance")
     void getAllAttendance_ShouldReturn200() throws Exception {
@@ -107,6 +110,7 @@ class AttendanceControllerTest {
                 .andExpect(jsonPath("$[0].employeeCode").value("EMP001"));
     }
 
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return attendance by employee")
     void getAttendanceByEmployee_ShouldReturn200() throws Exception {
@@ -118,7 +122,7 @@ class AttendanceControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].employeeId").value(1));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return attendance by date")
     void getAttendanceByDate_ShouldReturn200() throws Exception {
@@ -132,7 +136,7 @@ class AttendanceControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].attendanceDate").value("2025-01-15"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should update attendance successfully")
     void updateAttendance_ShouldReturn200() throws Exception {
@@ -146,7 +150,7 @@ class AttendanceControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.workingHours").value(9.0));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should delete attendance successfully")
     void deleteAttendance_ShouldReturn204() throws Exception {

@@ -19,6 +19,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.security.test.context.support.WithMockUser;
 
 
 @WebMvcTest(AuthController.class)
@@ -35,6 +36,7 @@ class AuthControllerTest {
     @MockitoBean
     private AuthService authService;
 
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should login successfully")
     void login_ShouldReturn200_WhenCredentialsAreValid() throws Exception {
@@ -61,6 +63,7 @@ class AuthControllerTest {
                 .andExpect(jsonPath("$.role").value("ADMIN"));
     }
 
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return Bad Request when username is blank")
     void login_ShouldReturn400_WhenUsernameIsBlank() throws Exception {
@@ -74,7 +77,7 @@ class AuthControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest());
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return Bad Request when password is blank")
     void login_ShouldReturn400_WhenPasswordIsBlank() throws Exception {
