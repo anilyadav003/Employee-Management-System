@@ -8,7 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -30,9 +32,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.security.test.context.support.WithMockUser;
 
 
-@WebMvcTest(EmployeeController.class)
-@Import(TestSecurityConfig.class)
+@SpringBootTest
 @ActiveProfiles("test")
+@AutoConfigureMockMvc(addFilters = false)
 class EmployeeControllerTest {
 
     @Autowired
@@ -75,7 +77,7 @@ class EmployeeControllerTest {
                 .username("john")
                 .build();
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should create employee successfully")
     void createEmployee_ShouldReturn201() throws Exception {
@@ -93,7 +95,7 @@ class EmployeeControllerTest {
                 .andExpect(jsonPath("$.firstName").value("John"))
                 .andExpect(jsonPath("$.employeeCode").value("EMP001"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return employee by id")
     void getEmployeeById_ShouldReturn200() throws Exception {
@@ -106,7 +108,7 @@ class EmployeeControllerTest {
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.firstName").value("John"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return all employees")
     void getAllEmployees_ShouldReturn200() throws Exception {
@@ -118,7 +120,7 @@ class EmployeeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].employeeCode").value("EMP001"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return employee by employee code")
     void getEmployeeByCode_ShouldReturn200() throws Exception {
@@ -130,7 +132,7 @@ class EmployeeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.employeeCode").value("EMP001"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should update employee successfully")
     void updateEmployee_ShouldReturn200() throws Exception {
@@ -146,7 +148,7 @@ class EmployeeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.designation").value("Software Engineer"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should delete employee successfully")
     void deleteEmployee_ShouldReturn204() throws Exception {
@@ -157,6 +159,7 @@ class EmployeeControllerTest {
                 .andExpect(status().isNoContent());
     }
 
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return 400 when request is invalid")
     void createEmployee_ShouldReturn400_WhenRequestIsInvalid() throws Exception {

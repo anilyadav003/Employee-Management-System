@@ -8,7 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -29,9 +31,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.security.test.context.support.WithMockUser;
 
 
-@WebMvcTest(DepartmentController.class)
-@Import(TestSecurityConfig.class)
+@SpringBootTest
 @ActiveProfiles("test")
+@AutoConfigureMockMvc(addFilters = false)
 class DepartmentControllerTest {
 
     @Autowired
@@ -62,7 +64,7 @@ class DepartmentControllerTest {
                 .description("IT Department")
                 .build();
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should create department successfully")
     void createDepartment_ShouldReturn201() throws Exception {
@@ -80,7 +82,7 @@ class DepartmentControllerTest {
                 .andExpect(jsonPath("$.name").value("Information Technology"))
                 .andExpect(jsonPath("$.code").value("IT"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return department by id")
     void getDepartmentById_ShouldReturn200() throws Exception {
@@ -93,7 +95,7 @@ class DepartmentControllerTest {
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.name").value("Information Technology"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return all departments")
     void getAllDepartments_ShouldReturn200() throws Exception {
@@ -105,7 +107,7 @@ class DepartmentControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].code").value("IT"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return department by code")
     void getDepartmentByCode_ShouldReturn200() throws Exception {
@@ -117,7 +119,7 @@ class DepartmentControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("IT"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should update department successfully")
     void updateDepartment_ShouldReturn200() throws Exception {
@@ -133,7 +135,7 @@ class DepartmentControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.description").value("IT Department"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should delete department successfully")
     void deleteDepartment_ShouldReturn204() throws Exception {
@@ -143,7 +145,7 @@ class DepartmentControllerTest {
         mockMvc.perform(delete("/api/v1/departments/1"))
                 .andExpect(status().isNoContent());
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return 400 when request is invalid")
     void createDepartment_ShouldReturn400_WhenRequestIsInvalid() throws Exception {

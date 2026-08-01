@@ -9,7 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -32,9 +34,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.security.test.context.support.WithMockUser;
 
 
-@WebMvcTest(LeaveController.class)
-@Import(TestSecurityConfig.class)
+@SpringBootTest
 @ActiveProfiles("test")
+@AutoConfigureMockMvc(addFilters = false)
 class LeaveControllerTest {
 
     @Autowired
@@ -71,7 +73,7 @@ class LeaveControllerTest {
 
         return response;
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should apply leave successfully")
     void applyLeave_ShouldReturn201() throws Exception {
@@ -86,7 +88,7 @@ class LeaveControllerTest {
                 .andExpect(jsonPath("$.employeeCode").value("EMP001"))
                 .andExpect(jsonPath("$.status").value("PENDING"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return leave by id")
     void getLeaveById_ShouldReturn200() throws Exception {
@@ -98,7 +100,7 @@ class LeaveControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return all leaves")
     void getAllLeaves_ShouldReturn200() throws Exception {
@@ -110,7 +112,7 @@ class LeaveControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].employeeCode").value("EMP001"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return leaves by employee")
     void getLeavesByEmployee_ShouldReturn200() throws Exception {
@@ -122,7 +124,7 @@ class LeaveControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].employeeId").value(1));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return leaves by status")
     void getLeavesByStatus_ShouldReturn200() throws Exception {
@@ -134,7 +136,7 @@ class LeaveControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].status").value("PENDING"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should update leave successfully")
     void updateLeave_ShouldReturn200() throws Exception {
@@ -148,7 +150,7 @@ class LeaveControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.reason").value("Medical Leave"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should update leave status successfully")
     void updateLeaveStatus_ShouldReturn200() throws Exception {
@@ -163,7 +165,7 @@ class LeaveControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("APPROVED"));
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should delete leave successfully")
     void deleteLeave_ShouldReturn204() throws Exception {
@@ -173,7 +175,7 @@ class LeaveControllerTest {
         mockMvc.perform(delete("/api/v1/leaves/1"))
                 .andExpect(status().isNoContent());
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return 400 when request is invalid")
     void applyLeave_ShouldReturn400_WhenRequestIsInvalid() throws Exception {
