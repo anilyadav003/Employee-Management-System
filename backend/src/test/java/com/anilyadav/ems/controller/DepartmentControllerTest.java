@@ -25,9 +25,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.springframework.test.context.ActiveProfiles;
+
 
 @WebMvcTest(DepartmentController.class)
 @Import(TestSecurityConfig.class)
+@ActiveProfiles("test")
 class DepartmentControllerTest {
 
     @Autowired

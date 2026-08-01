@@ -18,9 +18,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.springframework.test.context.ActiveProfiles;
+
 
 @WebMvcTest(AuthController.class)
 @Import(TestSecurityConfig.class)
+@ActiveProfiles("test")
 class AuthControllerTest {
 
     @Autowired
