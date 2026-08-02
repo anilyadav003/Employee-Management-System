@@ -8,7 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -18,9 +20,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.security.test.context.support.WithMockUser;
 
-@WebMvcTest(AuthController.class)
-@Import(TestSecurityConfig.class)
+
+@SpringBootTest
+@ActiveProfiles("test")
+@AutoConfigureMockMvc(addFilters = false)
 class AuthControllerTest {
 
     @Autowired
@@ -32,6 +38,7 @@ class AuthControllerTest {
     @MockitoBean
     private AuthService authService;
 
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should login successfully")
     void login_ShouldReturn200_WhenCredentialsAreValid() throws Exception {
@@ -58,6 +65,7 @@ class AuthControllerTest {
                 .andExpect(jsonPath("$.role").value("ADMIN"));
     }
 
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return Bad Request when username is blank")
     void login_ShouldReturn400_WhenUsernameIsBlank() throws Exception {
@@ -71,7 +79,7 @@ class AuthControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest());
     }
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     @DisplayName("Should return Bad Request when password is blank")
     void login_ShouldReturn400_WhenPasswordIsBlank() throws Exception {
