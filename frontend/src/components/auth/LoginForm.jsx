@@ -53,16 +53,18 @@ function LoginForm() {
     try {
       setLoading(true);
 
-      console.log("Sending Request:", data);
-
       const response = await login(data);
 
       console.log("Backend Response:", response);
 
+      // Save JWT and user details
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("username", response.username);
+      localStorage.setItem("role", response.role);
+
       toast.success("Login Successful!");
 
-      // Navigation will be enabled after JWT storage
-      // navigate("/dashboard");
+      navigate("/dashboard");
 
     } catch (error) {
       console.error(error);
@@ -94,6 +96,7 @@ function LoginForm() {
       </Typography>
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
+
         <AppInput
           label="Username"
           type="text"
@@ -119,7 +122,9 @@ function LoginForm() {
             <InputAdornment position="end">
               <IconButton
                 edge="end"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() =>
+                  setShowPassword(!showPassword)
+                }
               >
                 {showPassword ? (
                   <VisibilityOff />
@@ -142,7 +147,10 @@ function LoginForm() {
         >
           <AppCheckbox label="Remember me" />
 
-          <Link href="#" underline="hover">
+          <Link
+            href="#"
+            underline="hover"
+          >
             Forgot Password?
           </Link>
         </Stack>
@@ -151,8 +159,11 @@ function LoginForm() {
           type="submit"
           disabled={loading}
         >
-          {loading ? "Signing In..." : "Sign In →"}
+          {loading
+            ? "Signing In..."
+            : "Sign In →"}
         </AppButton>
+
       </form>
     </AppCard>
   );

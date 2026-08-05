@@ -1,4 +1,9 @@
-import { Card, CardContent, Typography, Box } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Box,
+} from "@mui/material";
 
 function StatCard({
   title,
@@ -30,14 +35,16 @@ function StatCard({
 
       <CardContent>
         <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
           <Box>
             <Typography
-              color="text.secondary"
               variant="body2"
+              color="text.secondary"
             >
               {title}
             </Typography>
@@ -45,7 +52,7 @@ function StatCard({
             <Typography
               variant="h4"
               fontWeight="bold"
-              mt={1}
+              sx={{ mt: 1 }}
             >
               {value}
             </Typography>
@@ -53,11 +60,11 @@ function StatCard({
 
           <Box
             sx={{
-              bgcolor: `${color}20`,
-              color: color,
               width: 60,
               height: 60,
               borderRadius: "50%",
+              bgcolor: `${color}20`,
+              color: color,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

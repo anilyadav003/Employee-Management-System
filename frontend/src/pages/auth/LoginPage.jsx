@@ -11,12 +11,20 @@ function LoginPage() {
         bgcolor: "background.default",
       }}
     >
-      <Grid container sx={{ minHeight: "100vh" }}>
+      <Grid
+        container
+        sx={{
+          minHeight: "100vh",
+        }}
+      >
         {/* Left Side */}
         <Grid
           size={{ xs: 0, md: 6 }}
           sx={{
-            display: { xs: "none", md: "flex" },
+            display: {
+              xs: "none",
+              md: "flex",
+            },
           }}
         >
           <BrandingPanel />
@@ -25,10 +33,10 @@ function LoginPage() {
         {/* Right Side */}
         <Grid
           size={{ xs: 12, md: 6 }}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
           sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
             bgcolor: "background.default",
             p: 4,
           }}
