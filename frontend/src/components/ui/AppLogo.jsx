@@ -1,14 +1,18 @@
-import { Typography } from "@mui/material";
+import { Avatar } from "@mui/material";
+import BusinessIcon from "@mui/icons-material/Business";
 
 function AppLogo() {
   return (
-    <Typography
-      variant="h4"
-      fontWeight="bold"
-      color="white"
+    <Avatar
+      sx={{
+        bgcolor: "white",
+        color: "#2563EB",
+        width: 72,
+        height: 72,
+      }}
     >
-      EMS
-    </Typography>
+      <BusinessIcon sx={{ fontSize: 42 }} />
+    </Avatar>
   );
 }
 

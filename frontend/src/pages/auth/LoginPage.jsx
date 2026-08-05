@@ -1,4 +1,6 @@
 import { Box, Grid } from "@mui/material";
+
+import BrandingPanel from "../../components/auth/BrandingPanel";
 import LoginForm from "../../components/auth/LoginForm";
 
 function LoginPage() {
@@ -15,16 +17,9 @@ function LoginPage() {
           size={{ xs: 0, md: 6 }}
           sx={{
             display: { xs: "none", md: "flex" },
-            alignItems: "center",
-            justifyContent: "center",
-            bgcolor: "primary.main",
-            color: "white",
           }}
         >
-          <Box>
-            <h1>Employee Management System</h1>
-            <p>Enterprise Workforce Management</p>
-          </Box>
+          <BrandingPanel />
         </Grid>
 
         {/* Right Side */}
@@ -33,8 +28,19 @@ function LoginPage() {
           display="flex"
           justifyContent="center"
           alignItems="center"
+          sx={{
+            bgcolor: "background.default",
+            p: 4,
+          }}
         >
-          <LoginForm />
+          <Box
+            sx={{
+              width: "100%",
+              maxWidth: 500,
+            }}
+          >
+            <LoginForm />
+          </Box>
         </Grid>
       </Grid>
     </Box>
