@@ -20,8 +20,6 @@ function BrandingPanel() {
         p: 8,
       }}
     >
-      {/* Decorative Circles */}
-
       <Box
         sx={{
           position: "absolute",
@@ -51,16 +49,18 @@ function BrandingPanel() {
       <Typography
         variant="h3"
         fontWeight={700}
-        textAlign="center"
-        mt={4}
+        sx={{
+          textAlign: "center",
+          mt: 4,
+        }}
       >
         Employee Management System
       </Typography>
 
       <Typography
         variant="h6"
-        textAlign="center"
         sx={{
+          textAlign: "center",
           opacity: 0.85,
           mt: 2,
           maxWidth: 430,

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LoginPage from "../pages/auth/LoginPage";
 import DashboardLayout from "../layouts/DashboardLayout";
+import EmployeePage from "../pages/employee/EmployeePage";
 import NotFoundPage from "../pages/error/NotFoundPage";
 
 import ROUTES from "../constants/routes";
@@ -22,7 +23,13 @@ function AppRoutes() {
           element={<DashboardLayout />}
         />
 
-        {/* 404 Page */}
+        {/* Employees */}
+        <Route
+          path={ROUTES.EMPLOYEES}
+          element={<EmployeePage />}
+        />
+
+        {/* 404 */}
         <Route
           path="*"
           element={<NotFoundPage />}

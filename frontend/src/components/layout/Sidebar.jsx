@@ -1,3 +1,5 @@
+import { Link, useLocation } from "react-router-dom";
+
 import {
   Box,
   Typography,
@@ -18,18 +20,54 @@ import {
   Settings,
 } from "@mui/icons-material";
 
+import ROUTES from "../../constants/routes";
+
 const menuItems = [
-  { text: "Dashboard", icon: <Dashboard /> },
-  { text: "Employees", icon: <People /> },
-  { text: "Departments", icon: <Business /> },
-  { text: "Attendance", icon: <EventAvailable /> },
-  { text: "Leave", icon: <BeachAccess /> },
-  { text: "Payroll", icon: <Payments /> },
-  { text: "Reports", icon: <Assessment /> },
-  { text: "Settings", icon: <Settings /> },
+  {
+    text: "Dashboard",
+    icon: <Dashboard />,
+    path: ROUTES.DASHBOARD,
+  },
+  {
+    text: "Employees",
+    icon: <People />,
+    path: ROUTES.EMPLOYEES,
+  },
+  {
+    text: "Departments",
+    icon: <Business />,
+    path: ROUTES.DEPARTMENTS,
+  },
+  {
+    text: "Attendance",
+    icon: <EventAvailable />,
+    path: "#",
+  },
+  {
+    text: "Leave",
+    icon: <BeachAccess />,
+    path: "#",
+  },
+  {
+    text: "Payroll",
+    icon: <Payments />,
+    path: "#",
+  },
+  {
+    text: "Reports",
+    icon: <Assessment />,
+    path: "#",
+  },
+  {
+    text: "Settings",
+    icon: <Settings />,
+    path: "#",
+  },
 ];
 
 function Sidebar() {
+  const location = useLocation();
+
   return (
     <Box
       sx={{
@@ -56,17 +94,33 @@ function Sidebar() {
         {menuItems.map((item) => (
           <ListItemButton
             key={item.text}
+            component={Link}
+            to={item.path}
+            selected={location.pathname === item.path}
             sx={{
               color: "white",
               mx: 1,
-              borderRadius: 2,
               mb: 1,
+              borderRadius: 2,
+
+              "&.Mui-selected": {
+                bgcolor: "#2563EB",
+              },
+
+              "&.Mui-selected:hover": {
+                bgcolor: "#1D4ED8",
+              },
+
               "&:hover": {
                 bgcolor: "#1E293B",
               },
             }}
           >
-            <ListItemIcon sx={{ color: "white" }}>
+            <ListItemIcon
+              sx={{
+                color: "white",
+              }}
+            >
               {item.icon}
             </ListItemIcon>
 
