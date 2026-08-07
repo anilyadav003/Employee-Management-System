@@ -12,6 +12,7 @@ import {
 import {
   Dashboard,
   People,
+  Person,
   Business,
   EventAvailable,
   BeachAccess,
@@ -27,6 +28,11 @@ const menuItems = [
     text: "Dashboard",
     icon: <Dashboard />,
     path: ROUTES.DASHBOARD,
+  },
+  {
+    text: "Users",
+    icon: <Person />,
+    path: ROUTES.USERS,
   },
   {
     text: "Employees",

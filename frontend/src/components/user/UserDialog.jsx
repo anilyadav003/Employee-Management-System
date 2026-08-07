@@ -6,35 +6,34 @@ import {
   Button,
 } from "@mui/material";
 
-import EmployeeForm from "./EmployeeForm";
+import UserForm from "./UserForm";
 
-function EmployeeDialog({
+function UserDialog({
   open,
   onClose,
   onSubmit,
+  user,
 }) {
   return (
     <Dialog
       open={open}
       onClose={onClose}
       fullWidth
-      maxWidth="md"
+      maxWidth="sm"
     >
       <DialogTitle>
-        Add Employee
+        {user ? "Edit User" : "Add User"}
       </DialogTitle>
 
-      <DialogContent dividers>
-        <EmployeeForm
+      <DialogContent>
+        <UserForm
+          user={user}
           onSubmit={onSubmit}
         />
       </DialogContent>
 
       <DialogActions>
-        <Button
-          variant="outlined"
-          onClick={onClose}
-        >
+        <Button onClick={onClose}>
           Cancel
         </Button>
       </DialogActions>
@@ -42,4 +41,4 @@ function EmployeeDialog({
   );
 }
 
-export default EmployeeDialog;
+export default UserDialog;

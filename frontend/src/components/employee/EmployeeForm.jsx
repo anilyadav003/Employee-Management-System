@@ -6,38 +6,61 @@ import {
   Button,
 } from "@mui/material";
 
-function EmployeeForm({
-  onSubmit,
-}) {
-  const [employee, setEmployee] = useState({
-    firstName: "",
-    lastName: "",
-    employeeCode: "",
-    designation: "",
-    salary: "",
-    departmentId: "",
-    userId: "",
-    dateOfJoining: "",
-  });
+const initialState = {
+  firstName: "",
+  lastName: "",
+  employeeCode: "",
+  designation: "",
+  salary: "",
+  departmentId: "",
+  userId: "",
+  dateOfJoining: "",
+};
+
+function EmployeeForm({ onSubmit }) {
+  const [employee, setEmployee] = useState(initialState);
+
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
-    setEmployee({
-      ...employee,
-      [event.target.name]: event.target.value,
-    });
+    const { name, value } = event.target;
+
+    setEmployee((previous) => ({
+      ...previous,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    onSubmit(employee);
+
+    try {
+      setLoading(true);
+
+      await onSubmit({
+        ...employee,
+        salary: Number(employee.salary),
+        departmentId: Number(employee.departmentId),
+        userId: Number(employee.userId),
+      });
+
+      setEmployee(initialState);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <Grid container spacing={2} sx={{ mt: 1 }}>
+      <Grid
+        container
+        spacing={2}
+        sx={{ mt: 1 }}
+      >
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
             fullWidth
+            required
             label="First Name"
             name="firstName"
             value={employee.firstName}
@@ -48,6 +71,7 @@ function EmployeeForm({
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
             fullWidth
+            required
             label="Last Name"
             name="lastName"
             value={employee.lastName}
@@ -58,6 +82,7 @@ function EmployeeForm({
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
             fullWidth
+            required
             label="Employee Code"
             name="employeeCode"
             value={employee.employeeCode}
@@ -68,6 +93,7 @@ function EmployeeForm({
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
             fullWidth
+            required
             label="Designation"
             name="designation"
             value={employee.designation}
@@ -78,6 +104,7 @@ function EmployeeForm({
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
             fullWidth
+            required
             type="number"
             label="Salary"
             name="salary"
@@ -89,6 +116,7 @@ function EmployeeForm({
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
             fullWidth
+            required
             type="number"
             label="Department ID"
             name="departmentId"
@@ -100,6 +128,7 @@ function EmployeeForm({
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
             fullWidth
+            required
             type="number"
             label="User ID"
             name="userId"
@@ -111,6 +140,7 @@ function EmployeeForm({
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
             fullWidth
+            required
             type="date"
             label="Joining Date"
             name="dateOfJoining"
@@ -129,13 +159,14 @@ function EmployeeForm({
             fullWidth
             type="submit"
             variant="contained"
+            disabled={loading}
             sx={{
               mt: 2,
               py: 1.5,
               borderRadius: 2,
             }}
           >
-            Save Employee
+            {loading ? "Saving..." : "Save Employee"}
           </Button>
         </Grid>
       </Grid>
