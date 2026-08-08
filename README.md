@@ -8,32 +8,32 @@ The project demonstrates practical experience in **backend engineering, REST API
 
 ---
 
-## 🚀 What I Built
+##  What I Built
 
 This project is structured as a **full-stack enterprise application** with a clear separation between the frontend, backend, security layer, business logic, and persistence layer.
 
 ### Core Capabilities
 
-- 🔐 JWT-based authentication with Spring Security
-- 👥 User and role management
-- 👨‍💼 Complete employee lifecycle management
-- 🏢 Department management
-- 🕒 Attendance management
-- 🌴 Leave management and approval workflow
-- 📊 Data-driven administrative dashboard
-- 🔄 RESTful API architecture
-- 🗄️ MySQL relational database integration
-- ✅ Request validation
-- ⚠️ Centralized exception handling
-- 🛡️ Protected API endpoints
-- 💻 React-based responsive frontend
-- 🔌 Frontend–backend REST integration
-- 📦 Maven-based backend build
-- 🌿 Git/GitHub-based development workflow
+-  JWT-based authentication with Spring Security
+-  User and role management
+-  Complete employee lifecycle management
+-  Department management
+-  Attendance management
+-  Leave management and approval workflow
+-  Data-driven administrative dashboard
+-  RESTful API architecture
+-  MySQL relational database integration
+-  Request validation
+-  Centralized exception handling
+-  Protected API endpoints
+-  React-based responsive frontend
+-  Frontend–backend REST integration
+-  Maven-based backend build
+-  Git/GitHub-based development workflow
 
 ---
 
-# 🏗️ System Architecture
+#  System Architecture
 
 The application follows a layered architecture designed to keep responsibilities separated and make the system easier to maintain and extend.
 
@@ -70,7 +70,7 @@ The application follows a layered architecture designed to keep responsibilities
 
 ---
 
-# 🔐 Authentication & Security
+#  Authentication & Security
 
 Security was treated as a core part of the application.
 
@@ -125,7 +125,7 @@ EMPLOYEE
 
 ---
 
-# 👥 User Management
+#  User Management
 
 The User module handles the application's authentication identities and access roles.
 
@@ -143,7 +143,7 @@ The application separates **authentication identity** from employee business dat
 
 ---
 
-# 👨‍💼 Employee Management
+#  Employee Management
 
 The Employee module provides the core business functionality of the system.
 
@@ -174,7 +174,7 @@ The employee module is integrated with the department and user domains through r
 
 ---
 
-# 🏢 Department Management
+#  Department Management
 
 Department management provides organizational structure for employees.
 
@@ -199,7 +199,7 @@ Information Technology
 
 ---
 
-# 🕒 Attendance Management
+#  Attendance Management
 
 The attendance module provides structured employee attendance tracking.
 
@@ -214,7 +214,7 @@ The attendance module provides structured employee attendance tracking.
 
 ---
 
-# 🌴 Leave Management
+#  Leave Management
 
 The leave module manages employee leave requests and their lifecycle.
 
@@ -243,7 +243,7 @@ Pending
 
 ---
 
-# 📊 Dashboard & Analytics
+#  Dashboard & Analytics
 
 The dashboard transforms application data into useful organizational metrics.
 
@@ -262,7 +262,7 @@ Dashboard values are obtained from backend data and calculated from application 
 
 ---
 
-# 🔌 REST API Design
+#  REST API Design
 
 The backend exposes modular REST endpoints organized around business resources.
 
@@ -300,7 +300,7 @@ This keeps controllers lightweight and places business logic inside the service 
 
 ---
 
-# 🧠 Backend Engineering
+#  Backend Engineering
 
 The Spring Boot backend follows a structured package architecture:
 
@@ -335,7 +335,7 @@ com.anilyadav.ems
 
 ---
 
-# 💻 Frontend Architecture
+#  Frontend Architecture
 
 The frontend is built with React and organized around reusable application modules.
 
@@ -373,7 +373,7 @@ The frontend communicates with the Spring Boot backend through REST APIs and mai
 
 ---
 
-# 🗄️ Database Design
+#  Database Design
 
 The system uses **MySQL** with Spring Data JPA and Hibernate.
 
@@ -414,7 +414,7 @@ The system uses **MySQL** with Spring Data JPA and Hibernate.
 
 ---
 
-# 🛡️ Validation & Error Handling
+#  Validation & Error Handling
 
 The backend includes centralized mechanisms for handling invalid requests and application errors.
 
@@ -435,7 +435,7 @@ This improves:
 
 ---
 
-# 🧪 Testing & API Verification
+#  Testing & API Verification
 
 The application has been verified across its major functional modules during development.
 
@@ -459,7 +459,7 @@ API behavior can also be independently verified using Postman.
 
 ---
 
-# 🛠️ Technology Stack
+#  Technology Stack
 
 | Layer | Technology |
 |---|---|
@@ -481,7 +481,7 @@ API behavior can also be independently verified using Postman.
 
 ---
 
-# 📂 Project Structure
+#  Project Structure
 
 ```text
 Employee-Management-System/
@@ -499,7 +499,7 @@ Employee-Management-System/
 
 ---
 
-# ▶️ Run Locally
+#  Run Locally
 
 ## Prerequisites
 
@@ -572,7 +572,7 @@ The frontend will start using the Vite development server.
 
 ---
 
-# 🔄 End-to-End Application Flow
+#  End-to-End Application Flow
 
 ```text
                     USER
@@ -607,7 +607,7 @@ The frontend will start using the Vite development server.
 
 ---
 
-# 📈 Development Highlights
+#  Development Highlights
 
 This project demonstrates practical experience in:
 
@@ -632,7 +632,7 @@ This project demonstrates practical experience in:
 
 ---
 
-# 💡 Engineering Highlights
+#  Engineering Highlights
 
 The project was designed with maintainability and extensibility in mind.
 
@@ -658,7 +658,7 @@ The React frontend communicates with the Spring Boot backend through REST APIs, 
 
 ---
 
-# 🚀 Deployment Roadmap
+#  Deployment Roadmap
 
 The application is being prepared for containerized and cloud deployment.
 
@@ -692,7 +692,7 @@ Planned infrastructure work includes:
 
 ---
 
-# 🏆 Project Accomplishments
+#  Project Accomplishments
 
 ### Backend
 
@@ -726,7 +726,7 @@ Planned infrastructure work includes:
 
 ---
 
-# 🔮 Future Enhancements
+#  Future Enhancements
 
 The architecture provides a strong foundation for additional enterprise capabilities such as:
 
@@ -744,7 +744,7 @@ The architecture provides a strong foundation for additional enterprise capabili
 
 ---
 
-# 👨‍💻 Author
+#  Author
 
 ## G. Anil Yadav
 
@@ -758,7 +758,7 @@ LinkedIn:
 
 ---
 
-## ⭐ Project
+##  Project
 
 This project represents an end-to-end full-stack engineering journey, from database design and secure REST API development to React integration, containerization and cloud deployment.
 
