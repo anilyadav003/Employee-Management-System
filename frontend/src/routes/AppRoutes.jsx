@@ -2,6 +2,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  Navigate,
 } from "react-router-dom";
 
 import LoginPage from "../pages/auth/LoginPage";
@@ -80,6 +81,21 @@ function AppRoutes() {
 
           </Route>
         </Route>
+
+
+        {/* =========================
+            ROOT ROUTE
+        ========================== */}
+
+        <Route
+          path="/"
+          element={
+            <Navigate
+              to={ROUTES.LOGIN}
+              replace
+            />
+          }
+        />
 
 
         {/* =========================

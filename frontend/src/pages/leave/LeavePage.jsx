@@ -35,11 +35,9 @@ function LeavePage() {
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const [selectedLeave, setSelectedLeave] =
-    useState(null);
+  const [selectedLeave, setSelectedLeave] = useState(null);
 
-  const [successMessage, setSuccessMessage] =
-    useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   /*
    * ============================================================
@@ -49,9 +47,7 @@ function LeavePage() {
 
   const loadEmployees = async () => {
     try {
-      const response = await axiosClient.get(
-        "/employees"
-      );
+      const response = await axiosClient.get("/employees");
 
       const data = Array.isArray(response.data)
         ? response.data
@@ -59,10 +55,7 @@ function LeavePage() {
 
       setEmployees(data);
     } catch (err) {
-      console.error(
-        "Failed to load employees:",
-        err
-      );
+      console.error("Failed to load employees:", err);
 
       throw err;
     }
@@ -90,7 +83,9 @@ function LeavePage() {
       }
 
       setLeaves(
-        Array.isArray(data) ? data : []
+        Array.isArray(data)
+          ? data
+          : []
       );
     } catch (err) {
       console.error(
@@ -238,11 +233,25 @@ function LeavePage() {
    */
 
   const handleDelete = async (leave) => {
+    const employee =
+      employees.find(
+        (item) =>
+          Number(item.id) ===
+          Number(leave.employeeId)
+      );
+
     const employeeName =
-      leave.employee?.firstName ||
-      leave.employeeName ||
-      leave.employee?.employeeCode ||
-      "this employee";
+      employee
+        ? `${employee.firstName || ""} ${
+            employee.lastName || ""
+          }`.trim()
+        : leave.employee?.firstName
+          ? `${leave.employee.firstName || ""} ${
+              leave.employee.lastName || ""
+            }`.trim()
+          : leave.employeeName ||
+            leave.employee?.employeeCode ||
+            "this employee";
 
     const confirmed = window.confirm(
       `Are you sure you want to delete the leave record for ${employeeName}?`
@@ -283,7 +292,10 @@ function LeavePage() {
     <Box
       sx={{
         flex: 1,
-        p: 4,
+        p: {
+          xs: 2,
+          md: 4,
+        },
         bgcolor: "#F5F7FA",
         minHeight: "100%",
       }}
@@ -335,6 +347,7 @@ function LeavePage() {
       ) : (
         <LeaveTable
           leaves={leaves}
+          employees={employees}
           loading={loading}
           onEdit={handleEdit}
           onDelete={handleDelete}
