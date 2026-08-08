@@ -1,5 +1,14 @@
-import { Box, Button, TextField, InputAdornment } from "@mui/material";
-import { Search, Add } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
+
+import {
+  Search,
+  Add,
+} from "@mui/icons-material";
 
 function EmployeeToolbar({
   search,
@@ -20,10 +29,15 @@ function EmployeeToolbar({
       <TextField
         placeholder="Search Employee..."
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(event) =>
+          setSearch(event.target.value)
+        }
         size="small"
         sx={{
-          width: 350,
+          width: {
+            xs: "100%",
+            sm: 350,
+          },
           bgcolor: "white",
         }}
         InputProps={{

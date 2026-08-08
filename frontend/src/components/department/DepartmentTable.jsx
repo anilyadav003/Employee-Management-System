@@ -7,36 +7,36 @@ import {
   TableHead,
   TableRow,
   IconButton,
-  Tooltip,
   Typography,
+  Tooltip,
 } from "@mui/material";
 
-import {
-  Visibility,
-  Edit,
-  Delete,
-} from "@mui/icons-material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-function EmployeeTable({
-  employees,
-  onView,
+function DepartmentTable({
+  departments,
   onEdit,
   onDelete,
 }) {
   return (
     <TableContainer
       component={Paper}
-      elevation={3}
+      elevation={1}
       sx={{
-        borderRadius: 3,
-        overflowX: "auto",
+        borderRadius: 2,
+        overflow: "hidden",
       }}
     >
       <Table>
         <TableHead>
           <TableRow>
             <TableCell>
-              <strong>Employee Code</strong>
+              <strong>ID</strong>
+            </TableCell>
+
+            <TableCell>
+              <strong>Code</strong>
             </TableCell>
 
             <TableCell>
@@ -44,99 +44,72 @@ function EmployeeTable({
             </TableCell>
 
             <TableCell>
-              <strong>Department</strong>
+              <strong>Description</strong>
             </TableCell>
 
-            <TableCell>
-              <strong>Designation</strong>
-            </TableCell>
-
-            <TableCell>
-              <strong>Salary</strong>
-            </TableCell>
-
-            <TableCell align="center">
+            <TableCell align="right">
               <strong>Actions</strong>
             </TableCell>
           </TableRow>
         </TableHead>
 
         <TableBody>
-          {employees.length === 0 ? (
+          {departments.length === 0 ? (
             <TableRow>
               <TableCell
-                colSpan={6}
+                colSpan={5}
                 align="center"
+                sx={{ py: 5 }}
               >
                 <Typography
                   color="text.secondary"
-                  sx={{ py: 4 }}
                 >
-                  No employees found.
+                  No departments found.
                 </Typography>
               </TableCell>
             </TableRow>
           ) : (
-            employees.map((employee) => (
+            departments.map((department) => (
               <TableRow
-                key={employee.id}
+                key={department.id}
                 hover
               >
                 <TableCell>
-                  {employee.employeeCode}
+                  {department.id}
                 </TableCell>
 
                 <TableCell>
-                  {employee.firstName}{" "}
-                  {employee.lastName}
+                  {department.code}
                 </TableCell>
 
                 <TableCell>
-                  {employee.departmentName || "-"}
+                  {department.name}
                 </TableCell>
 
                 <TableCell>
-                  {employee.designation}
+                  {department.description || "-"}
                 </TableCell>
 
-                <TableCell>
-                  ₹
-                  {Number(
-                    employee.salary || 0
-                  ).toLocaleString("en-IN")}
-                </TableCell>
-
-                <TableCell align="center">
-                  <Tooltip title="View Employee">
-                    <IconButton
-                      color="info"
-                      onClick={() =>
-                        onView(employee)
-                      }
-                    >
-                      <Visibility />
-                    </IconButton>
-                  </Tooltip>
-
-                  <Tooltip title="Edit Employee">
+                <TableCell align="right">
+                  <Tooltip title="Edit">
                     <IconButton
                       color="primary"
                       onClick={() =>
-                        onEdit(employee)
+                        onEdit(department)
                       }
                     >
-                      <Edit />
+                      <EditIcon />
                     </IconButton>
                   </Tooltip>
 
-                  <Tooltip title="Delete Employee">
+                  <Tooltip title="Delete">
                     <IconButton
                       color="error"
                       onClick={() =>
-                        onDelete(employee)
+                        onDelete(department)
                       }
                     >
-                      <Delete />
+                      <DeleteIcon />
                     </IconButton>
                   </Tooltip>
                 </TableCell>
@@ -149,4 +122,4 @@ function EmployeeTable({
   );
 }
 
-export default EmployeeTable;
+export default DepartmentTable;

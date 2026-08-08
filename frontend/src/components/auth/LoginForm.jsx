@@ -23,6 +23,7 @@ import { toast } from "react-toastify";
 
 import loginSchema from "../../validation/loginSchema";
 import { login } from "../../services/authService";
+import { saveAuthData } from "../../utils/tokenStorage";
 
 import {
   AppButton,
@@ -57,20 +58,19 @@ function LoginForm() {
 
       console.log("Backend Response:", response);
 
-      // Save JWT and user details
-      localStorage.setItem("token", response.token);
-      localStorage.setItem("username", response.username);
-      localStorage.setItem("role", response.role);
+      saveAuthData(response);
 
-      toast.success("Login Successful!");
+      toast.success("Login successful!");
 
-      navigate("/dashboard");
-
+      navigate("/dashboard", {
+        replace: true,
+      });
     } catch (error) {
       console.error(error);
 
       toast.error(
         error.response?.data?.message ||
+          error.response?.data?.error ||
           "Invalid username or password."
       );
     } finally {
@@ -95,8 +95,10 @@ function LoginForm() {
         Sign in to continue to Employee Management System.
       </Typography>
 
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+      >
         <AppInput
           label="Username"
           type="text"
@@ -122,8 +124,9 @@ function LoginForm() {
             <InputAdornment position="end">
               <IconButton
                 edge="end"
+                type="button"
                 onClick={() =>
-                  setShowPassword(!showPassword)
+                  setShowPassword((previous) => !previous)
                 }
               >
                 {showPassword ? (
@@ -150,6 +153,7 @@ function LoginForm() {
           <Link
             href="#"
             underline="hover"
+            onClick={(event) => event.preventDefault()}
           >
             Forgot Password?
           </Link>
@@ -163,7 +167,6 @@ function LoginForm() {
             ? "Signing In..."
             : "Sign In →"}
         </AppButton>
-
       </form>
     </AppCard>
   );

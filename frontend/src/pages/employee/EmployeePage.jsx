@@ -1,10 +1,20 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import {
-  Box,
-  Typography,
-  CircularProgress,
   Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Typography,
 } from "@mui/material";
 
 import EmployeeTable from "../../components/employee/EmployeeTable";
@@ -14,50 +24,96 @@ import EmployeeDialog from "../../components/employee/EmployeeDialog";
 import {
   getAllEmployees,
   createEmployee,
+  updateEmployee,
+  deleteEmployee,
 } from "../../services/employeeService";
 
 import { toast } from "react-toastify";
 
 function EmployeePage() {
-  const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] =
+    useState([]);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] =
+    useState(true);
 
-  const [error, setError] = useState("");
+  const [error, setError] =
+    useState("");
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] =
+    useState("");
 
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] =
+    useState(false);
 
-  useEffect(() => {
-    fetchEmployees();
-  }, []);
+  const [dialogMode, setDialogMode] =
+    useState("create");
+
+  const [selectedEmployee, setSelectedEmployee] =
+    useState(null);
+
+  const [deleteDialogOpen, setDeleteDialogOpen] =
+    useState(false);
+
+  const [deleting, setDeleting] =
+    useState(false);
 
   const fetchEmployees = async () => {
     try {
       setLoading(true);
+      setError("");
 
       const data = await getAllEmployees();
 
-      setEmployees(data);
+      setEmployees(
+        Array.isArray(data) ? data : []
+      );
     } catch (err) {
       console.error(err);
 
-      setError("Failed to load employees.");
+      setError(
+        err.response?.data?.message ||
+          "Failed to load employees."
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  const handleCreateEmployee = async (employee) => {
+  useEffect(() => {
+    fetchEmployees();
+  }, []);
+
+  const handleOpenCreate = () => {
+    setSelectedEmployee(null);
+    setDialogMode("create");
+    setDialogOpen(true);
+  };
+
+  const handleView = (employee) => {
+    setSelectedEmployee(employee);
+    setDialogMode("view");
+    setDialogOpen(true);
+  };
+
+  const handleEdit = (employee) => {
+    setSelectedEmployee(employee);
+    setDialogMode("edit");
+    setDialogOpen(true);
+  };
+
+  const handleCreate = async (employee) => {
     try {
       await createEmployee(employee);
 
-      toast.success("Employee created successfully.");
+      toast.success(
+        "Employee created successfully."
+      );
 
       setDialogOpen(false);
+      setSelectedEmployee(null);
 
-      fetchEmployees();
+      await fetchEmployees();
     } catch (err) {
       console.error(err);
 
@@ -65,30 +121,105 @@ function EmployeePage() {
         err.response?.data?.message ||
           "Failed to create employee."
       );
+
+      throw err;
     }
   };
 
-  const filteredEmployees = employees.filter((employee) => {
-    const keyword = search.toLowerCase();
+  const handleUpdate = async (employee) => {
+    try {
+      await updateEmployee(
+        selectedEmployee.id,
+        employee
+      );
 
-    return (
-      employee.firstName
-        .toLowerCase()
-        .includes(keyword) ||
-      employee.lastName
-        .toLowerCase()
-        .includes(keyword) ||
-      employee.employeeCode
-        .toLowerCase()
-        .includes(keyword) ||
-      employee.departmentName
-        .toLowerCase()
-        .includes(keyword)
-    );
-  });
+      toast.success(
+        "Employee updated successfully."
+      );
+
+      setDialogOpen(false);
+      setSelectedEmployee(null);
+
+      await fetchEmployees();
+    } catch (err) {
+      console.error(err);
+
+      toast.error(
+        err.response?.data?.message ||
+          "Failed to update employee."
+      );
+
+      throw err;
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!selectedEmployee) {
+      return;
+    }
+
+    try {
+      setDeleting(true);
+
+      await deleteEmployee(
+        selectedEmployee.id
+      );
+
+      toast.success(
+        "Employee deleted successfully."
+      );
+
+      setDeleteDialogOpen(false);
+      setSelectedEmployee(null);
+
+      await fetchEmployees();
+    } catch (err) {
+      console.error(err);
+
+      toast.error(
+        err.response?.data?.message ||
+          "Failed to delete employee."
+      );
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const filteredEmployees = useMemo(() => {
+    const keyword =
+      search.trim().toLowerCase();
+
+    if (!keyword) {
+      return employees;
+    }
+
+    return employees.filter((employee) => {
+      const values = [
+        employee.firstName,
+        employee.lastName,
+        employee.employeeCode,
+        employee.departmentName,
+        employee.designation,
+        employee.username,
+      ];
+
+      return values.some((value) =>
+        String(value || "")
+          .toLowerCase()
+          .includes(keyword)
+      );
+    });
+  }, [employees, search]);
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box
+      sx={{
+        p: {
+          xs: 2,
+          md: 4,
+        },
+      }}
+    >
       <Typography
         variant="h4"
         fontWeight="bold"
@@ -100,7 +231,7 @@ function EmployeePage() {
       <EmployeeToolbar
         search={search}
         setSearch={setSearch}
-        onAddClick={() => setDialogOpen(true)}
+        onAddClick={handleOpenCreate}
       />
 
       {loading && (
@@ -108,7 +239,7 @@ function EmployeePage() {
           sx={{
             display: "flex",
             justifyContent: "center",
-            mt: 5,
+            py: 8,
           }}
         >
           <CircularProgress />
@@ -116,7 +247,18 @@ function EmployeePage() {
       )}
 
       {!loading && error && (
-        <Alert severity="error">
+        <Alert
+          severity="error"
+          action={
+            <Button
+              color="inherit"
+              size="small"
+              onClick={fetchEmployees}
+            >
+              Retry
+            </Button>
+          }
+        >
           {error}
         </Alert>
       )}
@@ -124,14 +266,88 @@ function EmployeePage() {
       {!loading && !error && (
         <EmployeeTable
           employees={filteredEmployees}
+          onView={handleView}
+          onEdit={handleEdit}
+          onDelete={(employee) => {
+            setSelectedEmployee(employee);
+            setDeleteDialogOpen(true);
+          }}
         />
       )}
 
       <EmployeeDialog
         open={dialogOpen}
-        onClose={() => setDialogOpen(false)}
-        onSubmit={handleCreateEmployee}
+        onClose={() => {
+          setDialogOpen(false);
+          setSelectedEmployee(null);
+        }}
+        employee={selectedEmployee}
+        mode={dialogMode}
+        onSubmit={
+          dialogMode === "edit"
+            ? handleUpdate
+            : handleCreate
+        }
       />
+
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={() => {
+          if (!deleting) {
+            setDeleteDialogOpen(false);
+            setSelectedEmployee(null);
+          }
+        }}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle>
+          Delete Employee
+        </DialogTitle>
+
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete{" "}
+            <strong>
+              {selectedEmployee?.firstName}{" "}
+              {selectedEmployee?.lastName}
+            </strong>
+            ?
+            <br />
+            <br />
+            Employee Code:{" "}
+            <strong>
+              {selectedEmployee?.employeeCode}
+            </strong>
+            <br />
+            <br />
+            This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setDeleteDialogOpen(false);
+              setSelectedEmployee(null);
+            }}
+            disabled={deleting}
+          >
+            Cancel
+          </Button>
+
+          <Button
+            onClick={handleDelete}
+            color="error"
+            variant="contained"
+            disabled={deleting}
+          >
+            {deleting
+              ? "Deleting..."
+              : "Delete"}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

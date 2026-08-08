@@ -1,9 +1,5 @@
-import authApi from "./authApi";
+import axiosClient from "./axiosClient";
 
-const dashboardApi = () => {
-
-    return authApi.get("/dashboard");
-
+export const getDashboardApi = () => {
+  return axiosClient.get("/dashboard");
 };
-
-export default dashboardApi;

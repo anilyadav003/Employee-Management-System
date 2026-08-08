@@ -9,13 +9,14 @@ import {
 
 import StatCard from "./StatCard";
 
-function DashboardCards() {
+function DashboardCards({ dashboard }) {
   return (
     <Grid container spacing={3}>
+
       <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
         <StatCard
           title="Total Employees"
-          value="245"
+          value={dashboard?.totalEmployees ?? 0}
           icon={<People fontSize="large" />}
           color="#2563EB"
         />
@@ -24,7 +25,7 @@ function DashboardCards() {
       <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
         <StatCard
           title="Departments"
-          value="12"
+          value={dashboard?.totalDepartments ?? 0}
           icon={<Business fontSize="large" />}
           color="#10B981"
         />
@@ -33,7 +34,7 @@ function DashboardCards() {
       <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
         <StatCard
           title="Attendance"
-          value="98%"
+          value={`${dashboard?.attendance ?? 0}%`}
           icon={<EventAvailable fontSize="large" />}
           color="#F59E0B"
         />
@@ -42,11 +43,12 @@ function DashboardCards() {
       <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
         <StatCard
           title="Leave Requests"
-          value="18"
+          value={dashboard?.leaveRequests ?? 0}
           icon={<BeachAccess fontSize="large" />}
           color="#EF4444"
         />
       </Grid>
+
     </Grid>
   );
 }

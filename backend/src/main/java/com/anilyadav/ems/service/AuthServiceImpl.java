@@ -9,7 +9,6 @@ import com.anilyadav.ems.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -34,9 +33,7 @@ public class AuthServiceImpl implements AuthService {
 
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() ->
-                        new UsernameNotFoundException(
-                                "User not found"
-                        ));
+                        new UsernameNotFoundException("User not found"));
 
         UserDetails userDetails =
                 org.springframework.security.core.userdetails.User

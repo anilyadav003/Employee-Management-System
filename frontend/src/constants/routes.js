@@ -1,5 +1,5 @@
 const ROUTES = {
-  LOGIN: "/",
+  LOGIN: "/login",
 
   DASHBOARD: "/dashboard",
 
@@ -9,7 +9,11 @@ const ROUTES = {
 
   DEPARTMENTS: "/departments",
 
-  PROFILE: "/profile",
+  ATTENDANCE: "/attendance",
+
+  LEAVE: "/leave",
+
+  
 };
 
 export default ROUTES;
