@@ -1,7 +1,22 @@
-import { Card, CardContent, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Typography,
+} from "@mui/material";
+
 import { PieChart } from "@mui/x-charts/PieChart";
 
-function DepartmentChart() {
+function DepartmentChart({
+  departmentDistribution = [],
+}) {
+  const chartData = departmentDistribution.map(
+    (item, index) => ({
+      id: index,
+      value: item.count,
+      label: item.department,
+    })
+  );
+
   return (
     <Card
       elevation={4}
@@ -19,20 +34,20 @@ function DepartmentChart() {
           Department Distribution
         </Typography>
 
-        <PieChart
-          height={300}
-          series={[
-            {
-              data: [
-                { id: 0, value: 40, label: "IT" },
-                { id: 1, value: 20, label: "HR" },
-                { id: 2, value: 15, label: "Finance" },
-                { id: 3, value: 10, label: "Marketing" },
-                { id: 4, value: 15, label: "Sales" },
-              ],
-            },
-          ]}
-        />
+        {chartData.length > 0 ? (
+          <PieChart
+            height={300}
+            series={[
+              {
+                data: chartData,
+              },
+            ]}
+          />
+        ) : (
+          <Typography color="text.secondary">
+            No department data available.
+          </Typography>
+        )}
       </CardContent>
     </Card>
   );

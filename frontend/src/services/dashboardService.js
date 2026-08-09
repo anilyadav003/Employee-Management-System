@@ -1,9 +1,9 @@
-import dashboardApi from "../api/dashboardApi";
+import {
+  getDashboardApi,
+} from "../api/dashboardApi";
 
 export const getDashboard = async () => {
+  const response = await getDashboardApi();
 
-    const response = await dashboardApi();
-
-    return response.data;
-
+  return response.data;
 };

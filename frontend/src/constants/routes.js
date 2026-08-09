@@ -1,9 +1,19 @@
 const ROUTES = {
-  LOGIN: "/",
+  LOGIN: "/login",
+
   DASHBOARD: "/dashboard",
+
+  USERS: "/users",
+
   EMPLOYEES: "/employees",
+
   DEPARTMENTS: "/departments",
-  PROFILE: "/profile",
+
+  ATTENDANCE: "/attendance",
+
+  LEAVE: "/leave",
+
+  
 };
 
 export default ROUTES;

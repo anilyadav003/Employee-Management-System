@@ -1,4 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 import {
   Box,
@@ -12,12 +15,10 @@ import {
 import {
   Dashboard,
   People,
+  Person,
   Business,
   EventAvailable,
   BeachAccess,
-  Payments,
-  Assessment,
-  Settings,
 } from "@mui/icons-material";
 
 import ROUTES from "../../constants/routes";
@@ -27,107 +28,165 @@ const menuItems = [
     text: "Dashboard",
     icon: <Dashboard />,
     path: ROUTES.DASHBOARD,
+    enabled: true,
   },
+
+  {
+    text: "Users",
+    icon: <Person />,
+    path: ROUTES.USERS,
+    enabled: true,
+  },
+
   {
     text: "Employees",
     icon: <People />,
     path: ROUTES.EMPLOYEES,
+    enabled: true,
   },
+
   {
     text: "Departments",
     icon: <Business />,
     path: ROUTES.DEPARTMENTS,
+    enabled: true,
   },
+
   {
     text: "Attendance",
     icon: <EventAvailable />,
-    path: "#",
+    path: ROUTES.ATTENDANCE,
+    enabled: true,
   },
+
   {
     text: "Leave",
     icon: <BeachAccess />,
-    path: "#",
+    path: ROUTES.LEAVE,
+    enabled: true,
   },
-  {
-    text: "Payroll",
-    icon: <Payments />,
-    path: "#",
-  },
-  {
-    text: "Reports",
-    icon: <Assessment />,
-    path: "#",
-  },
-  {
-    text: "Settings",
-    icon: <Settings />,
-    path: "#",
-  },
+
 ];
 
 function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   return (
     <Box
       sx={{
-        width: 260,
+        width: {
+          xs: 220,
+          md: 260,
+        },
+
         bgcolor: "#0F172A",
+
         color: "white",
+
         display: "flex",
+
         flexDirection: "column",
+
+        minHeight: "100vh",
       }}
     >
+
+      {/* =========================
+          APPLICATION LOGO / TITLE
+      ========================== */}
+
       <Typography
         variant="h5"
         fontWeight="bold"
         sx={{
           p: 3,
+
           textAlign: "center",
-          borderBottom: "1px solid rgba(255,255,255,0.1)",
+
+          borderBottom:
+            "1px solid rgba(255,255,255,0.1)",
         }}
       >
         EMS
       </Typography>
 
+
+      {/* =========================
+          NAVIGATION MENU
+      ========================== */}
+
       <List sx={{ mt: 2 }}>
-        {menuItems.map((item) => (
-          <ListItemButton
-            key={item.text}
-            component={Link}
-            to={item.path}
-            selected={location.pathname === item.path}
-            sx={{
-              color: "white",
-              mx: 1,
-              mb: 1,
-              borderRadius: 2,
 
-              "&.Mui-selected": {
-                bgcolor: "#2563EB",
-              },
+        {menuItems.map((item) => {
 
-              "&.Mui-selected:hover": {
-                bgcolor: "#1D4ED8",
-              },
+          const selected =
+            location.pathname === item.path;
 
-              "&:hover": {
-                bgcolor: "#1E293B",
-              },
-            }}
-          >
-            <ListItemIcon
+          return (
+            <ListItemButton
+              key={item.text}
+
+              disabled={!item.enabled}
+
+              onClick={() => {
+                if (item.enabled) {
+                  navigate(item.path);
+                }
+              }}
+
+              selected={selected}
+
               sx={{
                 color: "white",
+
+                mx: 1,
+
+                mb: 1,
+
+                borderRadius: 2,
+
+                "&.Mui-selected": {
+                  bgcolor: "#2563EB",
+                },
+
+                "&.Mui-selected:hover": {
+                  bgcolor: "#1D4ED8",
+                },
+
+                "&:hover": {
+                  bgcolor: "#1E293B",
+                },
+
+                "&.Mui-disabled": {
+                  color:
+                    "rgba(255,255,255,0.55)",
+
+                  opacity: 0.7,
+                },
               }}
             >
-              {item.icon}
-            </ListItemIcon>
 
-            <ListItemText primary={item.text} />
-          </ListItemButton>
-        ))}
+              <ListItemIcon
+                sx={{
+                  color: "inherit",
+
+                  minWidth: 42,
+                }}
+              >
+                {item.icon}
+              </ListItemIcon>
+
+              <ListItemText
+                primary={item.text}
+              />
+
+            </ListItemButton>
+          );
+        })}
+
       </List>
+
     </Box>
   );
 }

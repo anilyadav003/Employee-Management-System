@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
+import { Outlet } from "react-router-dom";
 
 import Sidebar from "../components/layout/Sidebar";
 import Topbar from "../components/layout/Topbar";
-import MainContent from "../components/layout/MainContent";
 
 function DashboardLayout() {
   return (
@@ -18,13 +18,21 @@ function DashboardLayout() {
       <Box
         sx={{
           flex: 1,
+          minWidth: 0,
           display: "flex",
           flexDirection: "column",
         }}
       >
         <Topbar />
 
-        <MainContent />
+        <Box
+          sx={{
+            flex: 1,
+            overflow: "auto",
+          }}
+        >
+          <Outlet />
+        </Box>
       </Box>
     </Box>
   );
