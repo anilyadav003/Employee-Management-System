@@ -5,8 +5,12 @@ import {
   clearAuthData,
 } from "../utils/tokenStorage";
 
+const API_BASE_URL = import.meta.env.DEV
+  ? "http://localhost:8081/api/v1"
+  : "/api/v1";
+
 const axiosClient = axios.create({
-  baseURL: "http://localhost:8081/api/v1",
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -33,7 +37,6 @@ axiosClient.interceptors.response.use(
     if (status === 401 && getToken()) {
       clearAuthData();
 
-      // Redirect only when the user was already authenticated.
       if (window.location.pathname !== "/") {
         window.location.href = "/";
       }
