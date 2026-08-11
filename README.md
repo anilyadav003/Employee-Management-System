@@ -1,8 +1,16 @@
 # Employee Management System
 
 ### Production-ready full-stack employee management platform built with React, Spring Boot, MySQL, Docker, AWS EC2 and GitHub Actions.
+## 🔑 Demo Credentials
 
-**Live Application:** http://65.0.45.153:5173  
+Use the following credentials to access the deployed application:
+
+| Field | Value |
+|---|---|
+| Username | `Dummy` |
+| Password | `dummy123` |
+
+**Live Application:** http://65.0.45.153:5173
 **Source Code:** https://github.com/anilyadav003/Employee-Management-System
 
 ---
