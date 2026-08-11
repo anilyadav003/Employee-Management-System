@@ -15,7 +15,7 @@ Use the following credentials to access the deployed application:
 
 ---
 
-## 🚀 Why I Built This
+##  Why I Built This
 
 Managing employees in a growing organization involves much more than basic CRUD operations.
 
@@ -25,9 +25,9 @@ The focus was not only on making the application work, but also on building it w
 
 ---
 
-## ✨ Features
+##  Features
 
-### 🔐 Authentication & Authorization
+###  Authentication & Authorization
 
 - JWT-based authentication
 - Spring Security integration
@@ -39,7 +39,7 @@ The focus was not only on making the application work, but also on building it w
 - Secure CORS configuration
 - Logout support
 
-### 👨‍💼 Employee Management
+###  Employee Management
 
 - Create employees
 - View employee details
@@ -49,7 +49,7 @@ The focus was not only on making the application work, but also on building it w
 - Department assignment
 - Employee status management
 
-### 🏢 Department Management
+### Department Management
 
 - Create departments
 - Update departments
@@ -57,7 +57,7 @@ The focus was not only on making the application work, but also on building it w
 - View departments
 - Associate employees with departments
 
-### 👥 User Management
+###  User Management
 
 - Create users
 - View users
@@ -66,21 +66,21 @@ The focus was not only on making the application work, but also on building it w
 - Assign roles
 - Manage user accounts
 
-### 🕐 Attendance Management
+###  Attendance Management
 
 - Record attendance
 - View attendance records
 - Manage employee attendance
 - Track attendance information
 
-### 🌴 Leave Management
+###  Leave Management
 
 - Submit leave requests
 - View leave requests
 - Manage leave requests
 - Track employee leave information
 
-### 📊 Dashboard
+###  Dashboard
 
 - Employee statistics
 - Department information
@@ -90,7 +90,7 @@ The focus was not only on making the application work, but also on building it w
 
 ---
 
-# 🏗️ Architecture
+#  Architecture
 
 The application follows a layered backend architecture designed to keep business logic, API handling, persistence, and security concerns separated.
 
@@ -140,7 +140,7 @@ Security is integrated into the request pipeline using Spring Security and JWT a
 
 ---
 
-# ☁️ Production Deployment
+#  Production Deployment
 
 The application is deployed on an AWS EC2 instance using Docker.
 
@@ -175,7 +175,7 @@ The application is deployed on an AWS EC2 instance using Docker.
 
 ---
 
-# 🧰 Technology Stack
+#  Technology Stack
 
 | Layer | Technology |
 |---|---|
@@ -192,7 +192,7 @@ The application is deployed on an AWS EC2 instance using Docker.
 
 ---
 
-# 🔒 Security
+#  Security
 
 Security was treated as a core part of the application rather than an afterthought.
 
@@ -212,7 +212,7 @@ Sensitive configuration such as database credentials and JWT secrets is kept out
 
 ---
 
-# 🔄 CI with GitHub Actions
+#  CI with GitHub Actions
 
 Every push to the repository can trigger the CI workflow.
 
@@ -242,7 +242,7 @@ The CI pipeline helps ensure that changes pushed to the repository can be automa
 
 ---
 
-# 🐳 Dockerized Application
+#  Dockerized Application
 
 The application is containerized so that the major components can run consistently across environments.
 
@@ -282,7 +282,7 @@ docker compose down
 
 ---
 
-# 📂 Project Structure
+#  Project Structure
 
 ```text
 Employee-Management-System/
@@ -320,7 +320,7 @@ Employee-Management-System/
 
 ---
 
-# 🔐 Authentication Flow
+#  Authentication Flow
 
 ```text
 1. User enters username and password
@@ -352,7 +352,7 @@ Employee-Management-System/
 
 ---
 
-# 🧪 Testing & CI
+#  Testing & CI
 
 The project uses Maven-based build and test execution.
 
@@ -362,7 +362,7 @@ The CI pipeline helps catch build or test failures before changes are considered
 
 ---
 
-# 🛠️ Running Locally
+#  Running Locally
 
 ## Prerequisites
 
@@ -429,7 +429,7 @@ http://65.0.45.153:5173
 
 ---
 
-# 🔄 Development Workflow
+#  Development Workflow
 
 ```text
 Feature Development
@@ -453,7 +453,7 @@ The project follows Git-based version control and uses GitHub Actions for contin
 
 ---
 
-# 📈 Engineering Practices
+#  Engineering Practices
 
 ### Backend
 
@@ -485,7 +485,7 @@ The project follows Git-based version control and uses GitHub Actions for contin
 
 ---
 
-# 📚 What I Learned
+#  What I Learned
 
 Building and deploying this project provided hands-on experience across the complete software development lifecycle:
 
@@ -519,7 +519,7 @@ The deployment process also provided practical experience with production concer
 
 ---
 
-# 🔮 Future Improvements
+#  Future Improvements
 
 - Automated CI/CD deployment to AWS
 - HTTPS with a custom domain
@@ -535,7 +535,7 @@ The deployment process also provided practical experience with production concer
 
 ---
 
-# 👨‍💻 Author
+#  Author
 
 ## Anil Yadav
 
@@ -544,7 +544,7 @@ https://github.com/anilyadav003
 
 ---
 
-# ⭐ Project Highlights
+#  Project Highlights
 
 ```text
 ✓ Full-stack enterprise-style application
