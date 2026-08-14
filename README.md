@@ -518,6 +518,47 @@ Production Debugging
 The deployment process also provided practical experience with production concerns such as environment configuration, CORS, Docker networking, database connectivity, authentication configuration, and debugging cloud-hosted applications.
 
 ---
+# Testing & CI
+
+The backend APIs were tested across the core CRUD operations to verify request handling, validation, database operations and API responses.
+
+### API Testing
+
+The following REST operations were tested using Postman:
+
+| Operation | HTTP Method | Purpose |
+|---|---|---|
+| Create | POST | Create users, employees, departments and other records |
+| Read | GET | Retrieve individual and collection records |
+| Update | PUT | Update existing records |
+| Delete | DELETE | Remove existing records |
+
+The API testing covered the major application modules including:
+
+- User Management
+- Employee Management
+- Department Management
+- Attendance Management
+- Leave Management
+
+### CI Testing
+
+GitHub Actions automatically runs the Maven build and test process when changes are pushed to the repository.
+
+```text
+Code Change
+    ↓
+Git Commit
+    ↓
+Git Push
+    ↓
+GitHub Actions
+    ↓
+Maven Build
+    ↓
+Automated Tests
+    ↓
+CI Result
 
 #  Future Improvements
 
